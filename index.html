@@ -48,7 +48,7 @@
             width: 100%;
             height: 100%;
             z-index: -2;
-            background-image: url('https://images.unsplash.com/photo-1573920111312-04ec60cbdd78?w=2400&q=80&auto=format&fit=crop');
+            background-image: url('bear-background.png');
             background-position: center center;
             background-size: cover;
             background-repeat: no-repeat;
@@ -64,18 +64,14 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: linear-gradient(
-                135deg,
-                rgba(45, 74, 62, 0.85) 0%,
-                rgba(58, 46, 31, 0.80) 50%,
-                rgba(139, 105, 20, 0.75) 100%
-            );
+            background: rgba(0, 0, 0, 0.5);
         }
 
         .content {
             padding: 2rem;
             max-width: 600px;
             animation: fadeInUp 1s ease-out forwards;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.6);
         }
 
         @keyframes fadeInUp {
