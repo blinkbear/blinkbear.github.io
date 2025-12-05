@@ -1,12 +1,251 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>BlinkBear</title>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlinkBear – 20-20-20 Eye Health App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --warm-cream: #FDF8F3;
+            --soft-brown: #8B6914;
+            --deep-forest: #2D4A3E;
+            --honey-gold: #D4A03C;
+            --text-dark: #3A2E1F;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--warm-cream);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background image with overlay */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: 
+                url('https://images.unsplash.com/photo-1589656966895-2f33e7653819?auto=format&fit=crop&w=1920&q=80') 
+                center center / cover no-repeat;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(
+                135deg,
+                rgba(45, 74, 62, 0.85) 0%,
+                rgba(58, 46, 31, 0.80) 50%,
+                rgba(139, 105, 20, 0.75) 100%
+            );
+        }
+
+        .content {
+            padding: 2rem;
+            max-width: 600px;
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Bear emoji decoration */
+        .bear-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            animation: gentle-bounce 3s ease-in-out infinite;
+        }
+
+        @keyframes gentle-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .app-name {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(3rem, 10vw, 5rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--warm-cream) 0%, var(--honey-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .tagline {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            font-weight: 400;
+            font-style: italic;
+            opacity: 0.95;
+            margin-bottom: 2.5rem;
+            color: var(--warm-cream);
+        }
+
+        .description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            opacity: 0.9;
+            margin-bottom: 3rem;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .divider {
+            width: 60px;
+            height: 3px;
+            background: var(--honey-gold);
+            margin: 0 auto 2rem;
+            border-radius: 2px;
+        }
+
+        .contact {
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+
+        .contact a {
+            color: var(--honey-gold);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid transparent;
+        }
+
+        .contact a:hover {
+            border-bottom-color: var(--honey-gold);
+            opacity: 1;
+        }
+
+        /* Subtle floating particles effect */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(212, 160, 60, 0.3);
+            border-radius: 50%;
+            animation: float-up 15s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 25%; animation-delay: 3s; }
+        .particle:nth-child(3) { left: 40%; animation-delay: 6s; }
+        .particle:nth-child(4) { left: 55%; animation-delay: 9s; }
+        .particle:nth-child(5) { left: 70%; animation-delay: 12s; }
+        .particle:nth-child(6) { left: 85%; animation-delay: 2s; }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Footer */
+        footer {
+            position: absolute;
+            bottom: 1.5rem;
+            font-size: 0.8rem;
+            opacity: 0.5;
+        }
+    </style>
 </head>
 <body>
-  <h1>BlinkBear</h1>
-  <p>Personal 20-20-20 eye health app.</p>
-  <p>Contact: yourname@example.com</p>
+    <div class="background"></div>
+    <div class="overlay"></div>
+    
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <main class="content">
+        <div class="bear-icon">🐻</div>
+        <h1 class="app-name">BlinkBear</h1>
+        <p class="tagline">A personal 20-20-20 eye health app.</p>
+        
+        <div class="divider"></div>
+        
+        <p class="description">
+            Give your eyes the rest they deserve. BlinkBear gently reminds you to take breaks, 
+            following the 20-20-20 rule: every 20 minutes, look at something 20 feet away 
+            for 20 seconds.
+        </p>
+        
+        <p class="contact">
+            Questions? Reach out at <a href="mailto:yourname@example.com">yourname@example.com</a>
+        </p>
+    </main>
+
+    <footer>
+        &copy; 2025 BlinkBear
+    </footer>
 </body>
 </html>
+
