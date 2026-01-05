@@ -5,33 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - BlinkBear</title>
     <meta name="description" content="BlinkBear Privacy Policy - We don't collect any personal data.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
+        :root {
+            --cream: #FDF8F3;
+            --light-caramel: #E8D5C4;
+            --caramel: #D4A574;
+            --brown: #A67C52;
+            --dark-brown: #6B4423;
+            --honey: #DAA520;
+            --warm-beige: #F5E6D3;
+        }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'DM Sans', sans-serif;
             line-height: 1.7;
-            color: #333;
-            background: #f9f9f9;
+            color: var(--dark-brown);
+            background: linear-gradient(135deg, var(--cream) 0%, var(--light-caramel) 50%, var(--warm-beige) 100%);
+            min-height: 100vh;
         }
         
         .container {
             max-width: 800px;
             margin: 0 auto;
             padding: 40px 20px;
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
             min-height: 100vh;
+            box-shadow: 0 0 60px rgba(107, 68, 35, 0.1);
         }
         
         header {
             text-align: center;
             margin-bottom: 40px;
             padding-bottom: 20px;
-            border-bottom: 3px solid #8B4513;
+            border-bottom: 3px solid var(--brown);
         }
         
         .bear-icon {
@@ -40,28 +55,28 @@
         }
         
         h1 {
-            color: #8B4513;
+            color: var(--dark-brown);
             font-size: 32px;
             margin-bottom: 10px;
         }
         
         .last-updated {
-            color: #666;
+            color: var(--brown);
             font-size: 14px;
             font-style: italic;
         }
         
         h2 {
-            color: #8B4513;
+            color: var(--dark-brown);
             font-size: 24px;
             margin-top: 40px;
             margin-bottom: 15px;
             padding-bottom: 8px;
-            border-bottom: 2px solid #D4C4A8;
+            border-bottom: 2px solid var(--light-caramel);
         }
         
         h3 {
-            color: #5d3a1a;
+            color: var(--brown);
             font-size: 18px;
             margin-top: 25px;
             margin-bottom: 10px;
@@ -69,7 +84,7 @@
         
         p {
             margin-bottom: 15px;
-            color: #444;
+            color: var(--dark-brown);
         }
         
         ul, ol {
@@ -79,30 +94,32 @@
         
         li {
             margin-bottom: 8px;
+            color: var(--dark-brown);
         }
         
         strong {
-            color: #8B4513;
+            color: var(--brown);
             font-weight: 600;
         }
         
         a {
-            color: #8B4513;
+            color: var(--brown);
             text-decoration: none;
-            border-bottom: 1px solid #8B4513;
+            border-bottom: 1px solid var(--brown);
+            transition: all 0.3s ease;
         }
         
         a:hover {
-            color: #5d3a1a;
-            border-bottom-color: #5d3a1a;
+            color: var(--dark-brown);
+            border-bottom-color: var(--dark-brown);
         }
         
         .summary-box {
-            background: #f0e8d8;
-            border-left: 4px solid #8B4513;
+            background: var(--warm-beige);
+            border-left: 4px solid var(--brown);
             padding: 20px;
             margin: 30px 0;
-            border-radius: 4px;
+            border-radius: 8px;
         }
         
         .summary-box strong {
@@ -115,24 +132,26 @@
             display: inline-block;
             margin-top: 40px;
             padding: 12px 24px;
-            background: #8B4513;
+            background: linear-gradient(135deg, var(--brown), var(--caramel));
             color: white;
-            border-radius: 8px;
+            border-radius: 50px;
             text-decoration: none;
             border: none;
-            transition: background 0.3s;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(166, 124, 82, 0.3);
         }
         
         .back-home:hover {
-            background: #5d3a1a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(166, 124, 82, 0.4);
         }
         
         footer {
             margin-top: 60px;
             padding-top: 30px;
-            border-top: 2px solid #D4C4A8;
+            border-top: 2px solid var(--light-caramel);
             text-align: center;
-            color: #666;
+            color: var(--brown);
             font-size: 14px;
         }
         
@@ -288,10 +307,10 @@
             <p>BlinkBear is designed to be completely private. Your data never leaves your device. We cannot access, collect, or share your information because it simply doesn't come to us. No servers, no analytics, no tracking—just a helpful app that respects your privacy.</p>
         </div>
 
-        <a href="/" class="back-home">← Back to Home</a>
+        <a href="index.html" class="back-home">← Back to Home</a>
 
         <footer>
-            <p>© 2025 BlinkBear • <a href="mailto:blinkbear.app@gmail.com">blinkbear.app@gmail.com</a></p>
+            <p>&copy; 2025 BlinkBear • <a href="mailto:blinkbear.app@gmail.com">blinkbear.app@gmail.com</a></p>
         </footer>
     </div>
 </body>
