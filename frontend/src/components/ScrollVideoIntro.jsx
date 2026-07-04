@@ -70,7 +70,9 @@ export default function ScrollVideoIntro({
       const revealStart = Math.max(0, (S - vh) / S);
       let reveal = (progress - revealStart) / (1 - revealStart || 1);
       reveal = Math.min(1, Math.max(0, reveal));
-      if (content) content.style.opacity = String(reveal);
+      // smootherstep for a gentle, well-paced hand-off into the page
+      const eased = reveal * reveal * reveal * (reveal * (reveal * 6 - 15) + 10);
+      if (content) content.style.opacity = String(eased);
 
       // hide backdrop once fully covered (perf); show again when scrolling up
       if (layer) layer.style.visibility = reveal >= 0.999 ? "hidden" : "visible";

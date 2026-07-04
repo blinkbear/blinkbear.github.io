@@ -4,6 +4,7 @@ import { Palette } from "lucide-react";
 const OPTIONS = [
   { to: "/", label: "Cozy", testid: "switch-cozy" },
   { to: "/soft", label: "Soft", testid: "switch-soft" },
+  { to: "/motion", label: "Motion", testid: "switch-motion" },
   { to: "/minimal", label: "Minimal", testid: "switch-minimal" },
   { to: "/futuristic", label: "Futuristic", testid: "switch-futuristic" },
 ];

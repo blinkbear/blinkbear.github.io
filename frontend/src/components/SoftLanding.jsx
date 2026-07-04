@@ -25,7 +25,6 @@ const ACCENT = "#C2703D"; // muted terracotta
 const INK = "#2A2723";
 const BG = "#FAF7F2";
 const BORDER = "rgba(42,39,35,0.10)";
-const END_FRAME = `${process.env.PUBLIC_URL || ""}/intro-end.jpg`;
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -137,51 +136,47 @@ const Nav = () => {
 /* ---------- Hero ---------- */
 
 const Hero = () => (
-  <section id="top" className="relative flex min-h-[100svh] flex-col overflow-hidden">
-    {/* End-frame backdrop — matches the video's final frame for a seamless freeze */}
-    <img
-      src={END_FRAME}
-      alt=""
-      aria-hidden="true"
-      className="absolute inset-0 h-full w-full object-cover object-center"
-    />
-    {/* soft legibility wash + fade into the page background */}
-    <div className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-white/50 to-transparent" />
-    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-b from-transparent to-[#FAF7F2]" />
-
-    <div className="relative z-10 mx-auto flex w-full max-w-4xl flex-1 flex-col items-center px-6 pt-28 text-center lg:pt-32">
-      <motion.div
-        initial={{ opacity: 0, y: 18 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-      >
+  <section id="top" className="mx-auto max-w-6xl px-6 pt-16 pb-8 lg:px-8 lg:pt-24">
+    <div className="grid items-center gap-12 lg:grid-cols-2">
+      <motion.div initial="hidden" animate="show" variants={fadeUp}>
         <Tag><Sparkles className="h-4 w-4" strokeWidth={2} /> Backed by the 20-20-20 rule</Tag>
-        <h1 className="mt-6 font-fredoka text-5xl font-semibold leading-[1.05] tracking-tight drop-shadow-[0_1px_1px_rgba(255,255,255,0.6)] sm:text-6xl lg:text-7xl">
-          Your eyes deserve <span style={{ color: ACCENT }}>better.</span>
+        <h1 className="mt-6 font-fredoka text-5xl font-semibold leading-[1.06] tracking-tight sm:text-6xl lg:text-7xl">
+          Your eyes
+          <br />
+          deserve <span style={{ color: ACCENT }}>better.</span>
         </h1>
-        <p className="mx-auto mt-5 max-w-md font-dm-sans text-lg leading-relaxed text-[#2A2723]/70 drop-shadow-[0_1px_1px_rgba(255,255,255,0.5)]">
-          Every 20 minutes, take a 20-second break to look 20 feet away. Protect your vision and
-          quietly break screen addiction — no account, no tracking.
+        <p className="mt-6 max-w-lg font-dm-sans text-lg leading-relaxed text-[#2A2723]/65">
+          BlinkBear helps you protect your vision and break screen addiction. Every 20 minutes, take
+          a 20-second break to look 20 feet away. Simple. Effective. Life-changing.
         </p>
+        <div className="mt-9 flex flex-wrap items-center gap-4">
+          <AppStoreButton testid="soft-hero-cta" />
+          <div className="flex items-center gap-1.5 font-dm-sans">
+            <div className="flex">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="h-4 w-4" style={{ color: ACCENT }} fill={ACCENT} strokeWidth={1} />
+              ))}
+            </div>
+            <span className="text-sm text-[#2A2723]/55">Loved by thousands</span>
+          </div>
+        </div>
       </motion.div>
 
-      {/* spacer keeps the bear visible in the middle */}
-      <div className="flex-1" />
-
       <motion.div
-        initial={{ opacity: 0, y: 18 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-        className="mb-14 flex flex-col items-center gap-4"
+        initial={{ opacity: 0, scale: 0.92 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="relative flex justify-center"
       >
-        <AppStoreButton testid="soft-hero-cta" />
-        <div className="flex items-center gap-1.5 font-dm-sans">
-          <div className="flex">
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} className="h-4 w-4" style={{ color: ACCENT }} fill={ACCENT} strokeWidth={1} />
-            ))}
-          </div>
-          <span className="text-sm text-[#2A2723]/60">Loved by thousands · Free · iOS</span>
+        <div className="absolute inset-0 m-auto h-72 w-72 rounded-full bg-gradient-to-b from-[#F2E4D6] to-transparent blur-2xl" />
+        <div className={`relative ${card} p-6`} style={{ borderColor: BORDER }}>
+          <img src={BEAR.balloon} alt="BlinkBear mascot floating in a hot air balloon" className="animate-float w-64 sm:w-80" />
+        </div>
+        <div className="absolute -right-2 top-8 rotate-3 rounded-2xl border bg-white px-4 py-2 font-fredoka font-semibold shadow-[0_6px_20px_rgba(42,39,35,0.08)]" style={{ borderColor: BORDER }}>
+          20 sec 👀
+        </div>
+        <div className="absolute -left-3 bottom-10 -rotate-3 rounded-2xl border bg-white px-4 py-2 font-fredoka font-semibold shadow-[0_6px_20px_rgba(42,39,35,0.08)]" style={{ borderColor: BORDER }}>
+          🔥 12 day streak
         </div>
       </motion.div>
     </div>
