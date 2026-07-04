@@ -79,6 +79,25 @@ export default function ScrollVideoIntro({
     };
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
 
+    // iOS Safari shows black when scrubbing an un-primed video. A brief
+    // muted play/pause forces it to decode frames so seeking renders them.
+    let primed = false;
+    const prime = () => {
+      if (primed) return;
+      const p = video.play();
+      if (p && p.then) {
+        p.then(() => {
+          primed = true;
+          setTimeout(() => { try { video.pause(); } catch (e) {} update(); }, 80);
+        }).catch(() => {});
+      } else {
+        primed = true;
+        try { video.pause(); } catch (e) {}
+      }
+    };
+    video.addEventListener("loadeddata", prime);
+    if (video.readyState >= 2) prime();
+
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     update();
@@ -87,6 +106,7 @@ export default function ScrollVideoIntro({
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
       video.removeEventListener("loadedmetadata", onMeta);
+      video.removeEventListener("loadeddata", prime);
       if (raf) cancelAnimationFrame(raf);
     };
   }, [src, scrollMult]);
@@ -106,7 +126,9 @@ export default function ScrollVideoIntro({
           muted
           playsInline
           preload="auto"
+          disablePictureInPicture
           data-testid="intro-video"
+          style={{ backgroundImage: `url(${INTRO_POSTER})`, backgroundSize: "cover", backgroundPosition: "center" }}
           className="h-full w-full object-cover object-center"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />

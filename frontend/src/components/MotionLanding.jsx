@@ -52,8 +52,10 @@ function LoopVideo({ name, className = "" }) {
       muted
       loop
       playsInline
-      preload="none"
+      preload="metadata"
+      disablePictureInPicture
       data-testid={`loop-video-${name}`}
+      style={{ backgroundImage: `url(${POS(name)})`, backgroundSize: "cover", backgroundPosition: "center" }}
       className={className}
     />
   );
