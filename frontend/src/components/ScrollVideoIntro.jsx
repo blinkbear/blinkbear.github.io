@@ -1,74 +1,53 @@
 import { useRef, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 
-export const INTRO_VIDEO = `${process.env.PUBLIC_URL || ""}/intro.mp4`;
-export const INTRO_POSTER = `${process.env.PUBLIC_URL || ""}/intro-poster.jpg`;
+const BASE = process.env.PUBLIC_URL || "";
+const FRAME_COUNT = 61;
+const frameUrl = (i) =>
+  `${BASE}/intro-frames/f_${String(i).padStart(3, "0")}.jpg`;
 
 /**
- * Scroll-scrubbed cinematic intro that blends into the page.
+ * Scroll-scrubbed cinematic intro built from an IMAGE SEQUENCE.
  *
- * The video is a FIXED full-screen backdrop. A tall transparent spacer
- * provides the scroll distance used to scrub the video. The page content
- * (children) sits after the spacer and, over the final frames, rises up and
- * cross-fades in over the video — so you keep scrolling straight into the site.
+ * Frames are preloaded, then swapped on scroll based on position — no video
+ * decoding or seeking, so it's reliable across all browsers (incl. iOS Safari).
+ * A tall transparent spacer provides the scroll distance; the page content
+ * rises up and cross-fades in over the final frames.
  */
 export default function ScrollVideoIntro({
   children,
-  src = INTRO_VIDEO,
   scrollMult = 3,
   title = "Your eyes deserve better.",
   subtitle = "Keep scrolling",
 }) {
   const spacerRef = useRef(null);
-  const videoLayerRef = useRef(null);
-  const videoRef = useRef(null);
+  const layerRef = useRef(null);
+  const imgRef = useRef(null);
   const titleRef = useRef(null);
   const cueRef = useRef(null);
   const contentRef = useRef(null);
 
   useEffect(() => {
-    const video = videoRef.current;
     const spacer = spacerRef.current;
-    const layer = videoLayerRef.current;
+    const img = imgRef.current;
+    const layer = layerRef.current;
     const content = contentRef.current;
-    if (!video || !spacer) return;
+    if (!spacer || !img) return;
 
-    // Always begin at the very top on the first frame (disable scroll restore)
+    // Always begin at the very top on the first frame
     if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual";
     window.scrollTo(0, 0);
 
-    video.pause();
-    let duration = 0;
-    const onMeta = () => { duration = video.duration || 0; };
-    if (video.readyState >= 1) onMeta();
-    video.addEventListener("loadedmetadata", onMeta);
+    // Preload every frame so swapping is instant
+    const frames = [];
+    for (let i = 1; i <= FRAME_COUNT; i++) {
+      const im = new Image();
+      im.src = frameUrl(i);
+      if (im.decode) im.decode().catch(() => {});
+      frames.push(im);
+    }
 
-    // Coalesced seeking: keep only one seek in flight. Rapid scroll just
-    // moves the target; the next seek fires when 'seeked' resolves. A safety
-    // timer unsticks us if 'seeked' never fires (some browsers skip it).
-    let targetTime = 0;
-    let seeking = false;
-    let seekTimer = null;
-    const doSeek = () => {
-      if (!duration || seeking) return;
-      if (Math.abs(video.currentTime - targetTime) < 0.02) return;
-      seeking = true;
-      try {
-        video.currentTime = targetTime;
-      } catch (e) {
-        seeking = false;
-        return;
-      }
-      if (seekTimer) clearTimeout(seekTimer);
-      seekTimer = setTimeout(() => { seeking = false; doSeek(); }, 160);
-    };
-    const onSeeked = () => {
-      if (seekTimer) { clearTimeout(seekTimer); seekTimer = null; }
-      seeking = false;
-      doSeek();
-    };
-    video.addEventListener("seeked", onSeeked);
-
+    let currentIndex = -1;
     let raf = null;
     const update = () => {
       raf = null;
@@ -77,10 +56,12 @@ export default function ScrollVideoIntro({
       const y = window.scrollY || window.pageYOffset || 0;
       const progress = Math.min(1, Math.max(0, y / S));
 
-      // scrub video (coalesced)
-      if (duration && isFinite(duration)) {
-        targetTime = Math.min(duration - 0.05, progress * duration);
-        doSeek();
+      // swap frame
+      const idx = Math.min(FRAME_COUNT - 1, Math.round(progress * (FRAME_COUNT - 1)));
+      if (idx !== currentIndex) {
+        currentIndex = idx;
+        const src = frames[idx] && frames[idx].src;
+        if (src) img.src = src;
       }
 
       // intro overlay fades early
@@ -96,33 +77,11 @@ export default function ScrollVideoIntro({
       const revealStart = Math.max(0, (S - vh) / S);
       let reveal = (progress - revealStart) / (1 - revealStart || 1);
       reveal = Math.min(1, Math.max(0, reveal));
-      // smootherstep for a gentle, well-paced hand-off into the page
       const eased = reveal * reveal * reveal * (reveal * (reveal * 6 - 15) + 10);
       if (content) content.style.opacity = String(eased);
-
-      // hide backdrop once fully covered (perf); show again when scrolling up
       if (layer) layer.style.visibility = reveal >= 0.999 ? "hidden" : "visible";
     };
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
-
-    // iOS Safari needs a brief muted play/pause to decode frames before
-    // seeking will render them. Best-effort only — never blocks scrubbing.
-    let primed = false;
-    const prime = () => {
-      if (primed) return;
-      primed = true;
-      const p = video.play();
-      if (p && p.then) {
-        p.then(() => {
-          setTimeout(() => { try { video.pause(); } catch (e) {} doSeek(); }, 60);
-        }).catch(() => { primed = false; });
-      } else {
-        try { video.pause(); } catch (e) {}
-      }
-    };
-    video.addEventListener("loadeddata", prime);
-    video.addEventListener("canplay", prime);
-    if (video.readyState >= 2) prime();
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
@@ -131,33 +90,20 @@ export default function ScrollVideoIntro({
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
-      video.removeEventListener("loadedmetadata", onMeta);
-      video.removeEventListener("loadeddata", prime);
-      video.removeEventListener("canplay", prime);
-      video.removeEventListener("seeked", onSeeked);
-      if (seekTimer) clearTimeout(seekTimer);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [src, scrollMult]);
+  }, [scrollMult]);
 
   return (
     <>
       {/* Fixed cinematic backdrop */}
-      <div
-        ref={videoLayerRef}
-        className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-black"
-        style={{ willChange: "transform" }}
-      >
-        <video
-          ref={videoRef}
-          src={src}
-          poster={INTRO_POSTER}
-          muted
-          playsInline
-          preload="auto"
-          disablePictureInPicture
-          data-testid="intro-video"
-          style={{ backgroundImage: `url(${INTRO_POSTER})`, backgroundSize: "cover", backgroundPosition: "center" }}
+      <div ref={layerRef} className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-black">
+        <img
+          ref={imgRef}
+          src={frameUrl(1)}
+          alt=""
+          aria-hidden="true"
+          data-testid="intro-frame"
           className="h-full w-full object-cover object-center"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
