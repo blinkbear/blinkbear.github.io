@@ -55,8 +55,7 @@ export default function ScrollVideoIntro({
         }
       }
 
-      // subtle push-in
-      if (layer) layer.style.transform = `scale(${1 + progress * 0.08})`;
+      // keep backdrop aligned with the hero end-frame (no scaling)
 
       // intro overlay fades early
       if (titleRef.current) {
@@ -106,7 +105,7 @@ export default function ScrollVideoIntro({
           playsInline
           preload="auto"
           data-testid="intro-video"
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover object-center"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
 
