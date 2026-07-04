@@ -514,19 +514,22 @@ const Footer = () => (
 
 export default function SoftLanding() {
   return (
-    <div className="min-h-screen font-dm-sans" style={{ backgroundColor: BG, color: INK }}>
-      <ScrollVideoIntro />
-      <Nav />
-      <Hero />
-      <Marquee />
-      <Features />
-      <HowItWorks />
-      <Science />
-      <Testimonials />
-      <Pricing />
-      <FinalCTA />
-      <Footer />
+    <>
+      <ScrollVideoIntro>
+        <div className="min-h-screen font-dm-sans" style={{ backgroundColor: BG, color: INK }}>
+          <Nav />
+          <Hero />
+          <Marquee />
+          <Features />
+          <HowItWorks />
+          <Science />
+          <Testimonials />
+          <Pricing />
+          <FinalCTA />
+          <Footer />
+        </div>
+      </ScrollVideoIntro>
       <DesignSwitcher />
-    </div>
+    </>
   );
 }

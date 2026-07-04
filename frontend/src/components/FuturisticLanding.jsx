@@ -289,17 +289,20 @@ const Footer = () => (
 
 export default function FuturisticLanding() {
   return (
-    <div className="min-h-screen bg-[#08080C] font-manrope text-white antialiased">
-      <ScrollVideoIntro subtitle="Scroll to enter" />
-      <Nav />
-      <Hero />
-      <Marquee />
-      <Features />
-      <Protocol />
-      <Pricing />
-      <CTA />
-      <Footer />
+    <>
+      <ScrollVideoIntro subtitle="Scroll to enter">
+        <div className="min-h-screen bg-[#08080C] font-manrope text-white antialiased">
+          <Nav />
+          <Hero />
+          <Marquee />
+          <Features />
+          <Protocol />
+          <Pricing />
+          <CTA />
+          <Footer />
+        </div>
+      </ScrollVideoIntro>
       <DesignSwitcher />
-    </div>
+    </>
   );
 }

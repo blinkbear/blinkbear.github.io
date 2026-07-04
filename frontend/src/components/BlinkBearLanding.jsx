@@ -624,19 +624,22 @@ const Footer = () => (
 
 export default function BlinkBearLanding() {
   return (
-    <div className="min-h-screen bg-[#FFFDF8] font-dm-sans text-[#18181B]">
-      <ScrollVideoIntro />
-      <Nav />
-      <Hero />
-      <Marquee />
-      <Features />
-      <HowItWorks />
-      <Science />
-      <Testimonials />
-      <Pricing />
-      <FinalCTA />
-      <Footer />
+    <>
+      <ScrollVideoIntro>
+        <div className="min-h-screen bg-[#FFFDF8] font-dm-sans text-[#18181B]">
+          <Nav />
+          <Hero />
+          <Marquee />
+          <Features />
+          <HowItWorks />
+          <Science />
+          <Testimonials />
+          <Pricing />
+          <FinalCTA />
+          <Footer />
+        </div>
+      </ScrollVideoIntro>
       <DesignSwitcher />
-    </div>
+    </>
   );
 }

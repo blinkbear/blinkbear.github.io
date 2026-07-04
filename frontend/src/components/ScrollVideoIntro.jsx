@@ -5,25 +5,33 @@ export const INTRO_VIDEO = `${process.env.PUBLIC_URL || ""}/intro.mp4`;
 export const INTRO_POSTER = `${process.env.PUBLIC_URL || ""}/intro-poster.jpg`;
 
 /**
- * Scroll-scrubbed cinematic intro.
- * A tall scroll region pins a full-screen video; scroll position scrubs
- * through the video. Once past the region, the page content flows normally.
+ * Scroll-scrubbed cinematic intro that blends into the page.
+ *
+ * The video is a FIXED full-screen backdrop. A tall transparent spacer
+ * provides the scroll distance used to scrub the video. The page content
+ * (children) sits after the spacer and, over the final frames, rises up and
+ * cross-fades in over the video — so you keep scrolling straight into the site.
  */
 export default function ScrollVideoIntro({
+  children,
   src = INTRO_VIDEO,
-  heightVh = 320,
+  scrollMult = 3,
   title = "Your eyes deserve better.",
   subtitle = "Keep scrolling",
 }) {
-  const wrapRef = useRef(null);
+  const spacerRef = useRef(null);
+  const videoLayerRef = useRef(null);
   const videoRef = useRef(null);
   const titleRef = useRef(null);
   const cueRef = useRef(null);
+  const contentRef = useRef(null);
 
   useEffect(() => {
     const video = videoRef.current;
-    const wrap = wrapRef.current;
-    if (!video || !wrap) return;
+    const spacer = spacerRef.current;
+    const layer = videoLayerRef.current;
+    const content = contentRef.current;
+    if (!video || !spacer) return;
 
     video.pause();
     let duration = 0;
@@ -34,23 +42,39 @@ export default function ScrollVideoIntro({
     let raf = null;
     const update = () => {
       raf = null;
-      const scrollable = wrap.offsetHeight - window.innerHeight;
-      const top = wrap.getBoundingClientRect().top;
-      const progress = Math.min(1, Math.max(0, -top / scrollable));
+      const S = spacer.offsetHeight || 1;
+      const vh = window.innerHeight;
+      const y = window.scrollY || window.pageYOffset || 0;
+      const progress = Math.min(1, Math.max(0, y / S));
 
+      // scrub video
       if (duration && isFinite(duration)) {
         const t = progress * duration;
         if (Math.abs(video.currentTime - t) > 0.03) {
           try { video.currentTime = t; } catch (e) {}
         }
       }
+
+      // subtle push-in
+      if (layer) layer.style.transform = `scale(${1 + progress * 0.08})`;
+
+      // intro overlay fades early
       if (titleRef.current) {
-        titleRef.current.style.opacity = String(Math.max(0, 1 - progress / 0.35));
-        titleRef.current.style.transform = `translateY(${progress * -40}px)`;
+        titleRef.current.style.opacity = String(Math.max(0, 1 - progress / 0.4));
+        titleRef.current.style.transform = `translateY(${progress * -30}px)`;
       }
       if (cueRef.current) {
         cueRef.current.style.opacity = String(Math.max(0, 1 - progress / 0.25));
       }
+
+      // reveal window = final viewport of scroll (the last frames)
+      const revealStart = Math.max(0, (S - vh) / S);
+      let reveal = (progress - revealStart) / (1 - revealStart || 1);
+      reveal = Math.min(1, Math.max(0, reveal));
+      if (content) content.style.opacity = String(reveal);
+
+      // hide backdrop once fully covered (perf); show again when scrolling up
+      if (layer) layer.style.visibility = reveal >= 0.999 ? "hidden" : "visible";
     };
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
 
@@ -64,11 +88,16 @@ export default function ScrollVideoIntro({
       video.removeEventListener("loadedmetadata", onMeta);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [src]);
+  }, [src, scrollMult]);
 
   return (
-    <section ref={wrapRef} style={{ height: `${heightVh}vh` }} className="relative bg-black">
-      <div className="sticky top-0 h-screen w-full overflow-hidden bg-black">
+    <>
+      {/* Fixed cinematic backdrop */}
+      <div
+        ref={videoLayerRef}
+        className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-black"
+        style={{ willChange: "transform" }}
+      >
         <video
           ref={videoRef}
           src={src}
@@ -79,28 +108,29 @@ export default function ScrollVideoIntro({
           data-testid="intro-video"
           className="h-full w-full object-cover"
         />
-        {/* legibility gradient */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
 
-        <div
-          ref={titleRef}
-          className="pointer-events-none absolute inset-x-0 top-[38%] px-6 text-center"
-        >
+        <div ref={titleRef} className="pointer-events-none absolute inset-x-0 top-[38%] px-6 text-center">
           <h2 className="mx-auto max-w-3xl font-fredoka text-4xl font-bold leading-tight tracking-tight text-white drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)] sm:text-6xl">
             {title}
           </h2>
         </div>
 
-        <div
-          ref={cueRef}
-          className="pointer-events-none absolute inset-x-0 bottom-8 flex flex-col items-center gap-2 text-white/90"
-        >
+        <div ref={cueRef} className="pointer-events-none absolute inset-x-0 bottom-8 flex flex-col items-center gap-2 text-white/90">
           <span className="font-dm-sans text-sm font-medium tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)]">
             {subtitle}
           </span>
           <ChevronDown className="h-6 w-6 animate-bounce drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)]" />
         </div>
       </div>
-    </section>
+
+      {/* Transparent scroll spacer that drives the scrub */}
+      <div ref={spacerRef} aria-hidden style={{ height: `${scrollMult * 100}vh` }} />
+
+      {/* The site — rises up and cross-fades in over the final frames */}
+      <div ref={contentRef} className="relative z-10">
+        {children}
+      </div>
+    </>
   );
 }

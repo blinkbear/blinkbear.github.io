@@ -310,17 +310,20 @@ const Footer = () => (
 
 export default function MinimalLanding() {
   return (
-    <div className="min-h-screen bg-[#FAFAF7] font-manrope text-[#1A1A1A] antialiased">
-      <ScrollVideoIntro subtitle="Scroll to begin" />
-      <Nav />
-      <Hero />
-      <Features />
-      <Method />
-      <Pricing />
-      <FAQ />
-      <CTA />
-      <Footer />
+    <>
+      <ScrollVideoIntro subtitle="Scroll to begin">
+        <div className="min-h-screen bg-[#FAFAF7] font-manrope text-[#1A1A1A] antialiased">
+          <Nav />
+          <Hero />
+          <Features />
+          <Method />
+          <Pricing />
+          <FAQ />
+          <CTA />
+          <Footer />
+        </div>
+      </ScrollVideoIntro>
       <DesignSwitcher />
-    </div>
+    </>
   );
 }
