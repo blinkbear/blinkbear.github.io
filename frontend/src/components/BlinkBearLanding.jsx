@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-  Eye, ShieldOff, Flame, Clock, Lock, Sparkles, Star, Check,
+  ShieldOff, Flame, Clock, Lock, Sparkles, Star, Check,
   Smartphone, Menu, Heart,
 } from "lucide-react";
 
@@ -14,6 +14,7 @@ export const AppleLogo = ({ className = "h-7 w-7" }) => (
 
 const APP_STORE_URL = "https://apps.apple.com/de/app/blinkbear/id6756180445?l=en-GB";
 const CONTACT_EMAIL = "blinkbear.app@gmail.com";
+const APP_LOGO = "https://customer-assets.emergentagent.com/job_vision-breaks/artifacts/2fzibdh5_AppIcon.png";
 
 const BEAR = {
   balloon: "https://customer-assets.emergentagent.com/job_a2513eb8-82ec-4f68-a26a-c638e6f83911/artifacts/oko5lzm6_Balloon.png",
@@ -73,9 +74,11 @@ const Nav = () => {
     <header className="sticky top-0 z-50 border-b-4 border-[#18181B] bg-[#FFFDF8]/90 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-12">
         <a href="#top" data-testid="nav-logo" className="flex items-center gap-2.5">
-          <div className="grid h-11 w-11 place-items-center rounded-2xl border-4 border-[#18181B] bg-[#A1E3CB] shadow-[3px_3px_0_0_#18181B]">
-            <Eye className="h-5 w-5" strokeWidth={2.6} />
-          </div>
+          <img
+            src={APP_LOGO}
+            alt="BlinkBear app icon"
+            className="h-11 w-11 rounded-2xl border-4 border-[#18181B] object-cover shadow-[3px_3px_0_0_#18181B]"
+          />
           <span className="font-fredoka text-2xl font-bold tracking-tight">BlinkBear</span>
         </a>
 
@@ -554,9 +557,11 @@ const Footer = () => (
       <div className="flex flex-col justify-between gap-8 md:flex-row">
         <div className="max-w-sm">
           <div className="flex items-center gap-2.5">
-            <div className="grid h-11 w-11 place-items-center rounded-2xl border-4 border-[#FFFDF8] bg-[#A1E3CB]">
-              <Eye className="h-5 w-5 text-[#18181B]" strokeWidth={2.6} />
-            </div>
+            <img
+              src={APP_LOGO}
+              alt="BlinkBear app icon"
+              className="h-11 w-11 rounded-2xl border-4 border-[#FFFDF8] object-cover"
+            />
             <span className="font-fredoka text-2xl font-bold">BlinkBear</span>
           </div>
           <p className="mt-4 font-dm-sans text-[#FFFDF8]/70">

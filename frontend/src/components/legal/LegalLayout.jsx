@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Eye, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+
+const APP_LOGO = "https://customer-assets.emergentagent.com/job_vision-breaks/artifacts/2fzibdh5_AppIcon.png";
 
 export default function LegalLayout({ title, subtitle, updated, children }) {
   useEffect(() => {
@@ -12,9 +14,11 @@ export default function LegalLayout({ title, subtitle, updated, children }) {
       <header className="sticky top-0 z-50 border-b-4 border-[#18181B] bg-[#FFFDF8]/90 backdrop-blur-xl">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-4">
           <Link to="/" data-testid="legal-logo" className="flex items-center gap-2.5">
-            <div className="grid h-11 w-11 place-items-center rounded-2xl border-4 border-[#18181B] bg-[#A1E3CB] shadow-[3px_3px_0_0_#18181B]">
-              <Eye className="h-5 w-5" strokeWidth={2.6} />
-            </div>
+            <img
+              src={APP_LOGO}
+              alt="BlinkBear app icon"
+              className="h-11 w-11 rounded-2xl border-4 border-[#18181B] object-cover shadow-[3px_3px_0_0_#18181B]"
+            />
             <span className="font-fredoka text-2xl font-bold tracking-tight">BlinkBear</span>
           </Link>
           <Link
