@@ -10,6 +10,8 @@ module.exports = {
       fontFamily: {
         fredoka: ['Fredoka', 'sans-serif'],
         'dm-sans': ['DM Sans', 'sans-serif'],
+        manrope: ['Manrope', 'sans-serif'],
+        sora: ['Sora', 'sans-serif'],
       },
       borderRadius: {
         lg: 'var(--radius)',

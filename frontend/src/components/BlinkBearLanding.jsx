@@ -5,6 +5,7 @@ import {
   ShieldOff, Flame, Clock, Lock, Sparkles, Star, Check,
   Smartphone, Menu, Heart,
 } from "lucide-react";
+import DesignSwitcher from "./DesignSwitcher";
 
 export const AppleLogo = ({ className = "h-7 w-7" }) => (
   <svg viewBox="0 0 384 512" className={className} fill="currentColor" aria-hidden="true">
@@ -633,6 +634,7 @@ export default function BlinkBearLanding() {
       <Pricing />
       <FinalCTA />
       <Footer />
+      <DesignSwitcher />
     </div>
   );
 }
