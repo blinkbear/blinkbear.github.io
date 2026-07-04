@@ -1,0 +1,102 @@
+{
+  "theme": "LIGHT",
+  "archetype": "3 (Pastel & Soft) with Neo-Brutalist Twist",
+  "design_system": {
+    "vibe": "Optimistic, tactile, digital toy meets wellness tool.",
+    "rules": "Pair soft pastels with heavy dark borders and hard solid shadows. This grounds the cute 3D claymorphism aesthetic and prevents the app from feeling overly childish. It looks like a premium, trendy App Store editor's choice app."
+  },
+  "typography": {
+    "import_url": "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fredoka:wght@500;600;700&display=swap",
+    "headings": {
+      "fontFamily": "'Fredoka', sans-serif",
+      "classes": "font-fredoka tracking-tight text-[#18181B]"
+    },
+    "body": {
+      "fontFamily": "'DM Sans', sans-serif",
+      "classes": "font-dm-sans text-[#18181B]"
+    }
+  },
+  "colors": {
+    "background_primary": "#FFFDF8",
+    "text_primary": "#18181B",
+    "border_heavy": "#18181B",
+    "accents": {
+      "mint": "#A1E3CB",
+      "butter": "#FDE047",
+      "peach": "#FFB5A7",
+      "lavender": "#C4B5FD",
+      "blue": "#A7F3D0" 
+    }
+  },
+  "components": {
+    "cards": {
+      "base": "bg-white border-4 border-[#18181B] rounded-3xl shadow-[6px_6px_0_0_#18181B] p-8 md:p-10",
+      "hover": "hover:-translate-y-1 hover:shadow-[8px_8px_0_0_#18181B] transition-all duration-200"
+    },
+    "buttons": {
+      "primary": "bg-[#FDE047] text-[#18181B] border-4 border-[#18181B] rounded-full px-8 py-4 font-fredoka font-bold text-xl shadow-[4px_4px_0_0_#18181B] hover:translate-y-1 hover:shadow-[0px_0px_0_0_#18181B] transition-all",
+      "secondary": "bg-[#18181B] text-white border-4 border-[#18181B] rounded-full px-8 py-4 font-fredoka font-bold text-xl hover:bg-white hover:text-[#18181B] transition-colors"
+    },
+    "tags": {
+      "base": "inline-block bg-[#FFB5A7] border-2 border-[#18181B] rounded-full px-4 py-1.5 text-sm font-dm-sans font-bold shadow-[2px_2px_0_0_#18181B]"
+    }
+  },
+  "layout_protocol": {
+    "spacing": "Generous. Use py-24 or py-32 for sections. px-6 or px-12 for containers.",
+    "bento_grid": "grid grid-cols-1 md:grid-cols-12 gap-8. Mix col-span-8 and col-span-4 to create asymmetry."
+  },
+  "sections": [
+    {
+      "name": "Navigation",
+      "layout": "Sticky, top-0, z-50. backdrop-blur-xl bg-[#FFFDF8]/90. border-b-4 border-[#18181B]. Flex space-between. Left: 'BlinkBear' logo + Bear icon. Right: Nav links and 'Get App' button."
+    },
+    {
+      "name": "Hero Section",
+      "layout": "Asymmetrical split (grid-cols-1 lg:grid-cols-2). Left: Huge H1 'Your eyes deserve better.' + App Store Button. Right: A large 3D bear image floating over a pastel blob/shape background."
+    },
+    {
+      "name": "Marquee (The Science)",
+      "layout": "Full width scrolling marquee (using react-fast-marquee). Text: '20 MINUTES • 20 SECONDS • 20 FEET • SCIENTIFICALLY PROVEN •'. Thick solid text. Bg: Mint #A1E3CB, border-y-4 border-[#18181B]."
+    },
+    {
+      "name": "Features Bento Grid",
+      "layout": "Container max-w-7xl. 4 Cards. Card 1 (span 8): Smart Monitoring (Mint Bg). Card 2 (span 4): Gentle Reminders (Peach Bg). Card 3 (span 4): Privacy First (Lavender Bg). Card 4 (span 8): Progress Tracking (Butter Bg). Put 3D Bear fallback images in these cards."
+    },
+    {
+      "name": "How It Works",
+      "layout": "Vertical visual timeline. 6 Steps. Use large circular numbers with border-4. Connect them with a vertical dashed or solid line. Keep it playful."
+    },
+    {
+      "name": "Pricing (Free vs Premium)",
+      "layout": "Two massive side-by-side cards. Left 'Free' (White bg, core features). Right 'Premium' (Butter bg, 10+ bear themes). Feature lists with Lucide icons (Check/X)."
+    },
+    {
+      "name": "Testimonials",
+      "layout": "Masonry or slider of smaller neo-brutalist cards. 5-star reviews about ending doomscrolling."
+    },
+    {
+      "name": "Final CTA",
+      "layout": "Deep padded section. Background Peach #FFB5A7. Border-y-4. Centered huge text 'Build lasting healthy habits.' App Store Download button."
+    },
+    {
+      "name": "Footer",
+      "layout": "Dark theme shift: bg-[#18181B], text-[#FFFDF8]. Massive 'BlinkBear' at bottom. Links: Contact (blinkbear.app@gmail.com) and App Store Link."
+    }
+  ],
+  "image_urls": {
+    "app_store_badge": "https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg",
+    "bear_fallback_1": "https://images.unsplash.com/photo-1680054902981-e626fb4bd397?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODF8MHwxfHNlYXJjaHwzfHxjdXRlJTIwdGVkZHklMjBiZWFyJTIwM2R8ZW58MHx8fHwxNzgxOTQ4NTcyfDA&ixlib=rb-4.1.0&q=85",
+    "bear_fallback_2": "https://images.unsplash.com/photo-1576045348739-44efc01af9bb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODF8MHwxfHNlYXJjaHwyfHxjdXRlJTIwdGVkZHklMjBiZWFyJTIwM2R8ZW58MHx8fHwxNzgxOTQ4NTcyfDA&ixlib=rb-4.1.0&q=85",
+    "bear_fallback_3": "https://images.unsplash.com/photo-1778779180598-1937a1730ba5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODF8MHwxfHNlYXJjaHw0fHxjdXRlJTIwdGVkZHklMjBiZWFyJTIwM2R8ZW58MHx8fHwxNzgxOTQ4NTcyfDA&ixlib=rb-4.1.0&q=85"
+  },
+  "instructions_to_main_agent": [
+    "CRITICAL: The prompt mentions 'provided as image assets (bear in hot air balloon, bear DJ...)'. I checked the repo and they are NOT present yet. You MUST set up the UI using the 'bear_fallback' Unsplash images provided in the image_urls block as placeholders. Give them clear alt tags (e.g., 'bear DJ placeholder') so the user can easily replace the src later.",
+    "Build a pure HTML/Tailwind Marketing Page (do NOT use Shadcn Card/Button components as they are too rigid for this neo-brutalist style).",
+    "Setup the fonts: Add Google Fonts link to index.html and update tailwind.config.js to include fontFamilies 'fredoka' and 'dm-sans'.",
+    "Implement the Neo-brutalist style precisely: Every major card and button must have 'border-4 border-[#18181B]' and 'shadow-[6px_6px_0_0_#18181B]' (or similar offsets).",
+    "Add 'data-testid' to all interactive buttons, links, and forms as required.",
+    "Ensure the App Store badge link points to: https://apps.apple.com/de/app/blinkbear/id6756180445",
+    "Use Lucide-react for icons (e.g., eye, shield, check, star, smartphone).",
+    "For the Marquee, install and use 'react-fast-marquee'."
+  ]
+}
