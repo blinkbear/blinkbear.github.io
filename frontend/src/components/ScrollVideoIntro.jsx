@@ -39,9 +39,24 @@ export default function ScrollVideoIntro({
 
     video.pause();
     let duration = 0;
+    let ready = false;
     const onMeta = () => { duration = video.duration || 0; };
     if (video.readyState >= 1) onMeta();
     video.addEventListener("loadedmetadata", onMeta);
+
+    // Coalesced seeking: only one seek in flight at a time. Rapid scroll
+    // updates just move the target; the next seek fires when the last
+    // 'seeked' resolves. This keeps frames rendering smoothly (no stalls).
+    let targetTime = 0;
+    let seeking = false;
+    const doSeek = () => {
+      if (seeking || !ready || !duration) return;
+      if (Math.abs(video.currentTime - targetTime) < 0.02) return;
+      seeking = true;
+      try { video.currentTime = targetTime; } catch (e) { seeking = false; }
+    };
+    const onSeeked = () => { seeking = false; doSeek(); };
+    video.addEventListener("seeked", onSeeked);
 
     let raf = null;
     const update = () => {
@@ -51,15 +66,11 @@ export default function ScrollVideoIntro({
       const y = window.scrollY || window.pageYOffset || 0;
       const progress = Math.min(1, Math.max(0, y / S));
 
-      // scrub video
+      // scrub video (coalesced)
       if (duration && isFinite(duration)) {
-        const t = progress * duration;
-        if (Math.abs(video.currentTime - t) > 0.03) {
-          try { video.currentTime = t; } catch (e) {}
-        }
+        targetTime = Math.min(duration - 0.05, progress * duration);
+        doSeek();
       }
-
-      // keep backdrop aligned with the hero end-frame (no scaling)
 
       // intro overlay fades early
       if (titleRef.current) {
@@ -86,20 +97,23 @@ export default function ScrollVideoIntro({
     // iOS Safari shows black when scrubbing an un-primed video. A brief
     // muted play/pause forces it to decode frames so seeking renders them.
     let primed = false;
+    const markReady = () => { ready = true; update(); };
     const prime = () => {
       if (primed) return;
       const p = video.play();
       if (p && p.then) {
         p.then(() => {
           primed = true;
-          setTimeout(() => { try { video.pause(); } catch (e) {} update(); }, 80);
-        }).catch(() => {});
+          setTimeout(() => { try { video.pause(); } catch (e) {} markReady(); }, 60);
+        }).catch(() => { markReady(); });
       } else {
         primed = true;
         try { video.pause(); } catch (e) {}
+        markReady();
       }
     };
     video.addEventListener("loadeddata", prime);
+    video.addEventListener("canplay", prime);
     if (video.readyState >= 2) prime();
 
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -111,6 +125,8 @@ export default function ScrollVideoIntro({
       window.removeEventListener("resize", onScroll);
       video.removeEventListener("loadedmetadata", onMeta);
       video.removeEventListener("loadeddata", prime);
+      video.removeEventListener("canplay", prime);
+      video.removeEventListener("seeked", onSeeked);
       if (raf) cancelAnimationFrame(raf);
     };
   }, [src, scrollMult]);
