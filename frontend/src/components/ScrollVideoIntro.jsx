@@ -39,23 +39,34 @@ export default function ScrollVideoIntro({
 
     video.pause();
     let duration = 0;
-    let ready = false;
     const onMeta = () => { duration = video.duration || 0; };
     if (video.readyState >= 1) onMeta();
     video.addEventListener("loadedmetadata", onMeta);
 
-    // Coalesced seeking: only one seek in flight at a time. Rapid scroll
-    // updates just move the target; the next seek fires when the last
-    // 'seeked' resolves. This keeps frames rendering smoothly (no stalls).
+    // Coalesced seeking: keep only one seek in flight. Rapid scroll just
+    // moves the target; the next seek fires when 'seeked' resolves. A safety
+    // timer unsticks us if 'seeked' never fires (some browsers skip it).
     let targetTime = 0;
     let seeking = false;
+    let seekTimer = null;
     const doSeek = () => {
-      if (seeking || !ready || !duration) return;
+      if (!duration || seeking) return;
       if (Math.abs(video.currentTime - targetTime) < 0.02) return;
       seeking = true;
-      try { video.currentTime = targetTime; } catch (e) { seeking = false; }
+      try {
+        video.currentTime = targetTime;
+      } catch (e) {
+        seeking = false;
+        return;
+      }
+      if (seekTimer) clearTimeout(seekTimer);
+      seekTimer = setTimeout(() => { seeking = false; doSeek(); }, 160);
     };
-    const onSeeked = () => { seeking = false; doSeek(); };
+    const onSeeked = () => {
+      if (seekTimer) { clearTimeout(seekTimer); seekTimer = null; }
+      seeking = false;
+      doSeek();
+    };
     video.addEventListener("seeked", onSeeked);
 
     let raf = null;
@@ -94,22 +105,19 @@ export default function ScrollVideoIntro({
     };
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
 
-    // iOS Safari shows black when scrubbing an un-primed video. A brief
-    // muted play/pause forces it to decode frames so seeking renders them.
+    // iOS Safari needs a brief muted play/pause to decode frames before
+    // seeking will render them. Best-effort only — never blocks scrubbing.
     let primed = false;
-    const markReady = () => { ready = true; update(); };
     const prime = () => {
       if (primed) return;
+      primed = true;
       const p = video.play();
       if (p && p.then) {
         p.then(() => {
-          primed = true;
-          setTimeout(() => { try { video.pause(); } catch (e) {} markReady(); }, 60);
-        }).catch(() => { markReady(); });
+          setTimeout(() => { try { video.pause(); } catch (e) {} doSeek(); }, 60);
+        }).catch(() => { primed = false; });
       } else {
-        primed = true;
         try { video.pause(); } catch (e) {}
-        markReady();
       }
     };
     video.addEventListener("loadeddata", prime);
@@ -127,6 +135,7 @@ export default function ScrollVideoIntro({
       video.removeEventListener("loadeddata", prime);
       video.removeEventListener("canplay", prime);
       video.removeEventListener("seeked", onSeeked);
+      if (seekTimer) clearTimeout(seekTimer);
       if (raf) cancelAnimationFrame(raf);
     };
   }, [src, scrollMult]);
