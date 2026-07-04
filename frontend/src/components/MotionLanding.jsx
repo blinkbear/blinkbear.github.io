@@ -426,7 +426,7 @@ const Footer = () => (
 export default function MotionLanding() {
   return (
     <ScrollVideoIntro subtitle="Scroll to meet BlinkBear">
-      <div className="min-h-screen font-dm-sans" style={{ backgroundColor: BG, color: INK }}>
+      <div className="min-h-screen overflow-x-hidden font-dm-sans" style={{ backgroundColor: BG, color: INK }}>
         <Nav />
         <Hero />
         <Marquee />
