@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 
 const APP_LOGO = "https://customer-assets.emergentagent.com/job_vision-breaks/artifacts/2fzibdh5_AppIcon.png";
+const ACCENT = "#C96F3C";
+const INK = "#241F1B";
+const BG = "#FBF8F3";
 
 export default function LegalLayout({ title, subtitle, updated, children }) {
   useEffect(() => {
@@ -10,33 +13,41 @@ export default function LegalLayout({ title, subtitle, updated, children }) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#FFFDF8] font-dm-sans text-[#18181B]">
-      <header className="sticky top-0 z-50 border-b-4 border-[#18181B] bg-[#FFFDF8]/90 backdrop-blur-xl">
+    <div className="min-h-screen font-dm-sans" style={{ backgroundColor: BG, color: INK }}>
+      <header
+        className="sticky top-0 z-50 border-b backdrop-blur-xl"
+        style={{ borderColor: "rgba(36,31,27,0.08)", backgroundColor: "rgba(251,248,243,0.82)" }}
+      >
         <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-4">
           <Link to="/" data-testid="legal-logo" className="flex items-center gap-2.5">
             <img
               src={APP_LOGO}
-              alt="BlinkBear app icon"
-              className="h-11 w-11 rounded-2xl border-4 border-[#18181B] object-cover shadow-[3px_3px_0_0_#18181B]"
+              alt="BlinkBear"
+              className="h-10 w-10 rounded-2xl object-cover"
+              style={{ boxShadow: "0 2px 10px rgba(36,31,27,0.12)" }}
             />
-            <span className="font-fredoka text-2xl font-bold tracking-tight">BlinkBear</span>
+            <span className="font-fredoka text-2xl font-semibold tracking-tight">BlinkBear</span>
           </Link>
           <Link
             to="/"
             data-testid="legal-back-home"
-            className="inline-flex items-center gap-2 rounded-full border-4 border-[#18181B] bg-[#FDE047] px-5 py-2.5 font-fredoka font-bold shadow-[3px_3px_0_0_#18181B] transition-all hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[0px_0px_0_0_#18181B]"
+            className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 font-fredoka font-semibold text-white transition-all hover:opacity-90"
+            style={{ backgroundColor: INK }}
           >
-            <ArrowLeft className="h-4 w-4" strokeWidth={2.6} /> Home
+            <ArrowLeft className="h-4 w-4" strokeWidth={2.2} /> Home
           </Link>
         </div>
       </header>
 
       <main className="mx-auto max-w-4xl px-6 py-16">
-        <div className="rounded-[2rem] border-4 border-[#18181B] bg-white p-8 shadow-[8px_8px_0_0_#18181B] md:p-14">
-          <h1 className="font-fredoka text-4xl font-bold tracking-tight sm:text-5xl">{title}</h1>
-          {subtitle && <p className="mt-3 font-dm-sans text-lg text-[#18181B]/70">{subtitle}</p>}
+        <div className="rounded-[2rem] border border-black/5 bg-white p-8 shadow-[0_24px_60px_-30px_rgba(36,31,27,0.4)] md:p-14">
+          <h1 className="font-fredoka text-4xl font-semibold tracking-tight sm:text-5xl">{title}</h1>
+          {subtitle && <p className="mt-3 font-dm-sans text-lg text-[#241F1B]/65">{subtitle}</p>}
           {updated && (
-            <span className="mt-5 inline-block rounded-full border-2 border-[#18181B] bg-[#A1E3CB] px-4 py-1.5 text-sm font-bold shadow-[2px_2px_0_0_#18181B]">
+            <span
+              className="mt-5 inline-block rounded-full px-4 py-1.5 text-sm font-semibold"
+              style={{ backgroundColor: "rgba(201,111,60,0.1)", color: ACCENT }}
+            >
               Last updated: {updated}
             </span>
           )}
@@ -44,8 +55,8 @@ export default function LegalLayout({ title, subtitle, updated, children }) {
         </div>
       </main>
 
-      <footer className="border-t-4 border-[#18181B] bg-[#18181B] px-6 py-10 text-center text-[#FFFDF8]">
-        <p className="font-dm-sans text-sm text-[#FFFDF8]/60">
+      <footer className="border-t px-6 py-10 text-center" style={{ borderColor: "rgba(36,31,27,0.1)" }}>
+        <p className="font-dm-sans text-sm text-[#241F1B]/45">
           © {new Date().getFullYear()} BlinkBear. All eyes reserved.
         </p>
       </footer>
@@ -55,7 +66,7 @@ export default function LegalLayout({ title, subtitle, updated, children }) {
 
 export const Section = ({ title, children }) => (
   <section className="mt-8 first:mt-0">
-    <h2 className="font-fredoka text-2xl font-bold tracking-tight">{title}</h2>
-    <div className="mt-3 space-y-3 font-dm-sans leading-relaxed text-[#18181B]/80">{children}</div>
+    <h2 className="font-fredoka text-2xl font-semibold tracking-tight">{title}</h2>
+    <div className="mt-3 space-y-3 font-dm-sans leading-relaxed text-[#241F1B]/80">{children}</div>
   </section>
 );

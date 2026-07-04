@@ -4,7 +4,7 @@ const EMAIL = "blinkbear.app@gmail.com";
 
 const Bullet = ({ children }) => (
   <li className="flex gap-3">
-    <span className="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-[#FFB5A7] ring-2 ring-[#18181B]" />
+    <span className="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-[#C96F3C]" />
     <span>{children}</span>
   </li>
 );
@@ -147,7 +147,7 @@ export default function PrivacyPolicy() {
         <p>
           For information about how Apple handles data related to in-app purchases and the Screen Time
           API, please refer to the{" "}
-          <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener noreferrer" className="font-bold underline decoration-[#FFB5A7] decoration-2 underline-offset-2">
+          <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener noreferrer" className="font-bold underline decoration-[#C96F3C] decoration-2 underline-offset-2">
             Apple Privacy Policy
           </a>.
         </p>
@@ -156,15 +156,15 @@ export default function PrivacyPolicy() {
       <Section title="Contact Us">
         <p>
           If you have questions about this Privacy Policy or privacy practices, please contact us at{" "}
-          <a href={`mailto:${EMAIL}`} data-testid="privacy-contact-email" className="font-bold underline decoration-[#FFB5A7] decoration-2 underline-offset-2">
+          <a href={`mailto:${EMAIL}`} data-testid="privacy-contact-email" className="font-bold underline decoration-[#C96F3C] decoration-2 underline-offset-2">
             {EMAIL}
           </a>
           . We will respond to privacy inquiries within 30 days.
         </p>
       </Section>
 
-      <div className="mt-10 rounded-2xl border-4 border-[#18181B] bg-[#A1E3CB] p-6 shadow-[4px_4px_0_0_#18181B]">
-        <p className="font-fredoka text-lg font-bold">Summary 🧸</p>
+      <div className="mt-10 rounded-2xl border border-black/5 bg-[#F3EADF] p-6 shadow-sm">
+        <p className="font-fredoka text-lg font-semibold">Summary 🧸</p>
         <p className="mt-2 font-dm-sans text-[#18181B]/85">
           BlinkBear is designed to be completely private. Your data never leaves your device. We can't
           access, collect, or share your information because it simply doesn't come to us. No servers,

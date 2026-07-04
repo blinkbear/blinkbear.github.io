@@ -23,7 +23,7 @@ export default function Impressum() {
       <Section title="Kontakt / Contact">
         <p>
           E-Mail:{" "}
-          <a href={`mailto:${EMAIL}`} data-testid="impressum-contact-email" className="font-bold underline decoration-[#FFB5A7] decoration-2 underline-offset-2">
+          <a href={`mailto:${EMAIL}`} data-testid="impressum-contact-email" className="font-bold underline decoration-[#C96F3C] decoration-2 underline-offset-2">
             {EMAIL}
           </a>
         </p>
@@ -36,7 +36,7 @@ export default function Impressum() {
       <Section title="EU-Streitschlichtung">
         <p>
           Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:{" "}
-          <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer" className="font-bold underline decoration-[#FFB5A7] decoration-2 underline-offset-2">
+          <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer" className="font-bold underline decoration-[#C96F3C] decoration-2 underline-offset-2">
             https://ec.europa.eu/consumers/odr
           </a>
           . Unsere E-Mail-Adresse finden Sie oben im Impressum.
