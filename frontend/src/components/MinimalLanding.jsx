@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Eye, Shield, Flame, Lock, Plus, Minus } from "lucide-react";
 import { AppleLogo } from "./BlinkBearLanding";
 import DesignSwitcher from "./DesignSwitcher";
+import ScrollVideoIntro from "./ScrollVideoIntro";
 
 const APP_STORE_URL = "https://apps.apple.com/de/app/blinkbear/id6756180445?l=en-GB";
 const CONTACT_EMAIL = "blinkbear.app@gmail.com";
@@ -310,6 +311,7 @@ const Footer = () => (
 export default function MinimalLanding() {
   return (
     <div className="min-h-screen bg-[#FAFAF7] font-manrope text-[#1A1A1A] antialiased">
+      <ScrollVideoIntro subtitle="Scroll to begin" />
       <Nav />
       <Hero />
       <Features />

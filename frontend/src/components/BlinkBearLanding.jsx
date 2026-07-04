@@ -6,6 +6,7 @@ import {
   Smartphone, Menu, Heart,
 } from "lucide-react";
 import DesignSwitcher from "./DesignSwitcher";
+import ScrollVideoIntro from "./ScrollVideoIntro";
 
 export const AppleLogo = ({ className = "h-7 w-7" }) => (
   <svg viewBox="0 0 384 512" className={className} fill="currentColor" aria-hidden="true">
@@ -624,6 +625,7 @@ const Footer = () => (
 export default function BlinkBearLanding() {
   return (
     <div className="min-h-screen bg-[#FFFDF8] font-dm-sans text-[#18181B]">
+      <ScrollVideoIntro />
       <Nav />
       <Hero />
       <Marquee />

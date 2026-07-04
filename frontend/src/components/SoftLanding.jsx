@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { AppleLogo } from "./BlinkBearLanding";
 import DesignSwitcher from "./DesignSwitcher";
+import ScrollVideoIntro from "./ScrollVideoIntro";
 
 const APP_STORE_URL = "https://apps.apple.com/de/app/blinkbear/id6756180445?l=en-GB";
 const CONTACT_EMAIL = "blinkbear.app@gmail.com";
@@ -514,6 +515,7 @@ const Footer = () => (
 export default function SoftLanding() {
   return (
     <div className="min-h-screen font-dm-sans" style={{ backgroundColor: BG, color: INK }}>
+      <ScrollVideoIntro />
       <Nav />
       <Hero />
       <Marquee />
