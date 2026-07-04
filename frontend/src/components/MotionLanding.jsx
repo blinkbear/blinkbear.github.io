@@ -39,7 +39,7 @@ function LoopVideo({ name, className = "" }) {
         if (e.isIntersecting) v.play().catch(() => {});
         else v.pause();
       },
-      { threshold: 0.25 }
+      { rootMargin: "300px 0px 500px 0px", threshold: 0.01 }
     );
     io.observe(v);
     return () => io.disconnect();
@@ -52,7 +52,7 @@ function LoopVideo({ name, className = "" }) {
       muted
       loop
       playsInline
-      preload="metadata"
+      preload="auto"
       disablePictureInPicture
       data-testid={`loop-video-${name}`}
       style={{ backgroundImage: `url(${POS(name)})`, backgroundSize: "cover", backgroundPosition: "center" }}

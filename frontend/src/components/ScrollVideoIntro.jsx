@@ -33,6 +33,10 @@ export default function ScrollVideoIntro({
     const content = contentRef.current;
     if (!video || !spacer) return;
 
+    // Always begin at the very top on the first frame (disable scroll restore)
+    if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
+
     video.pause();
     let duration = 0;
     const onMeta = () => { duration = video.duration || 0; };
