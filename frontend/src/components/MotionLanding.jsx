@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-  Smartphone, ShieldOff, Flame, Clock, Sparkles, Star, Check, Heart,
+  Smartphone, ShieldOff, Flame, Clock, Sparkles, Star, Heart,
 } from "lucide-react";
 import ScrollVideoIntro from "./ScrollVideoIntro";
 
@@ -97,7 +97,7 @@ const Nav = () => (
         <span className="font-fredoka text-2xl font-semibold tracking-tight">BlinkBear</span>
       </a>
       <nav className="hidden items-center gap-9 md:flex">
-        {["Features", "How it works", "Pricing"].map((l) => (
+        {["Features", "How it works"].map((l) => (
           <a key={l} href={`#${l.split(" ")[0].toLowerCase()}`} className="font-dm-sans text-[15px] font-medium text-[#241F1B]/60 transition-colors hover:text-[#241F1B]">
             {l}
           </a>
@@ -323,46 +323,6 @@ const Testimonials = () => (
   </section>
 );
 
-const Pricing = () => (
-  <section id="pricing" className="mx-auto max-w-5xl px-6 py-8 pb-24 lg:px-8">
-    <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp} className="mb-14 text-center">
-      <Tag><Sparkles className="h-4 w-4" strokeWidth={2} /> Free & easy to start</Tag>
-      <h2 className="mt-5 font-fredoka text-4xl font-semibold tracking-tight sm:text-5xl">Everything essential, free</h2>
-    </motion.div>
-    <div className="grid gap-8 md:grid-cols-2">
-      <div className="rounded-3xl border border-black/5 bg-white p-8 shadow-sm">
-        <h3 className="font-fredoka text-3xl font-semibold">Free</h3>
-        <p className="mt-1 font-dm-sans text-[#241F1B]/60">All core features included.</p>
-        <ul className="mt-6 space-y-3">
-          {["20-20-20 break enforcement", "App monitoring & blocking", "Streak tracking", "Basic bear animations"].map((f) => (
-            <li key={f} className="flex items-center gap-3 font-dm-sans text-[#241F1B]/80">
-              <span className="grid h-5 w-5 place-items-center rounded-full" style={{ backgroundColor: "rgba(201,111,60,0.12)" }}>
-                <Check className="h-3 w-3" strokeWidth={3} style={{ color: ACCENT }} />
-              </span>{f}
-            </li>
-          ))}
-        </ul>
-        <div className="mt-8"><AppStoreButton testid="motion-price-free" variant="light" /></div>
-      </div>
-      <div className="relative rounded-3xl border p-8" style={{ borderColor: "rgba(201,111,60,0.4)", backgroundColor: "#FBF2E9" }}>
-        <span className="absolute -top-3 right-6 rounded-full px-4 py-1 font-fredoka text-sm font-semibold text-white" style={{ backgroundColor: ACCENT }}>Extra cute</span>
-        <h3 className="font-fredoka text-3xl font-semibold">Premium</h3>
-        <p className="mt-1 font-dm-sans text-[#241F1B]/60">Unlock full personalization.</p>
-        <ul className="mt-6 space-y-3">
-          {["Everything in Free", "10+ exclusive bear themes", "Custom shield colors", "Adjustable sound & vibration"].map((f) => (
-            <li key={f} className="flex items-center gap-3 font-dm-sans text-[#241F1B]/80">
-              <span className="grid h-5 w-5 place-items-center rounded-full bg-white">
-                <Check className="h-3 w-3" strokeWidth={3} style={{ color: ACCENT }} />
-              </span>{f}
-            </li>
-          ))}
-        </ul>
-        <div className="mt-8"><AppStoreButton testid="motion-price-premium" /></div>
-      </div>
-    </div>
-  </section>
-);
-
 const FinalCTA = () => (
   <section className="relative overflow-hidden border-y" style={{ borderColor: "rgba(36,31,27,0.1)" }}>
     <LoopVideo name="flower" className="absolute inset-0 h-full w-full object-cover" />
@@ -404,7 +364,6 @@ const Footer = () => (
             <ul className="mt-4 space-y-2 font-dm-sans text-[#241F1B]/60">
               <li><a href="#features" className="hover:text-[#241F1B]">Features</a></li>
               <li><a href="#how" className="hover:text-[#241F1B]">How it works</a></li>
-              <li><a href="#pricing" className="hover:text-[#241F1B]">Pricing</a></li>
             </ul>
           </div>
           <div>
@@ -436,7 +395,6 @@ export default function MotionLanding() {
         <HowItWorks />
         <Science />
         <Testimonials />
-        <Pricing />
         <FinalCTA />
         <Footer />
       </div>
